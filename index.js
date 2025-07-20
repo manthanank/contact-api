@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const logger = require('./logger');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors'); // Add CORS
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,9 @@ connectDB();
 
 // Middleware (add body parser if needed in the future)
 app.use(express.json());
+
+// Enable CORS
+app.use(cors());
 
 // Serve static files from the public directory
 app.use(express.static('public'));
