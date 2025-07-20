@@ -57,9 +57,22 @@ exports.getContacts = async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const ITEMS_PER_PAGE = 10;
+    const { search, email } = req.query;
+    const query = {};
+    if (search) {
+      // Search in name, email, or message (case-insensitive)
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { message: { $regex: search, $options: 'i' } },
+      ];
+    }
+    if (email) {
+      query.email = email;
+    }
     const [totalContacts, contacts] = await Promise.all([
-      Contact.countDocuments(),
-      Contact.find({})
+      Contact.countDocuments(query),
+      Contact.find(query)
         .sort({ createdAt: -1 })
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE),

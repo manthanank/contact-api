@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const contactsTableBody = document.getElementById('contactsTableBody');
   let currentPage = 1;
   const pageSize = 10; // Set your default page size
+  let currentSearch = '';
+  let currentEmailFilter = '';
 
   // Function to handle delegated events
   function handleTableClick(event) {
@@ -40,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const actionCell = document.createElement('td');
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
+    deleteButton.className = 'button';
     deleteButton.dataset.action = 'deleteContact';
     deleteButton.dataset.contactId = contact._id;
     actionCell.appendChild(deleteButton);
@@ -60,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 5000); // Hide after 5 seconds
   }
 
-  async function fetchAndPopulateContacts(page) {
+  async function fetchAndPopulateContacts(page, search = '', email = '') {
     try {
       const isLocal =
         window.location.hostname === 'localhost' ||
@@ -69,9 +72,13 @@ document.addEventListener('DOMContentLoaded', function () {
         ? 'http://localhost:3000/api/contacts'
         : 'https://contact-application-api.vercel.app/api/contacts';
 
-      const response = await fetch(
-        `${apiEndpoint}?page=${page}&pageSize=${pageSize}`,
-      );
+      const params = new URLSearchParams({
+        page,
+        pageSize
+      });
+      if (search) params.append('search', search);
+      if (email) params.append('email', email);
+      const response = await fetch(`${apiEndpoint}?${params.toString()}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -133,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('prevPage').addEventListener('click', function () {
     if (currentPage > 1) {
       currentPage--;
-      fetchAndPopulateContacts(currentPage);
+      fetchAndPopulateContacts(currentPage, currentSearch, currentEmailFilter);
     }
   });
 
@@ -149,9 +156,13 @@ document.addEventListener('DOMContentLoaded', function () {
           ? 'http://localhost:3000/api/contacts'
           : 'https://contact-application-api.vercel.app/api/contacts';
 
-        const response = await fetch(
-          `${apiEndpoint}?page=${currentPage + 1}&pageSize=${pageSize}`,
-        );
+        const params = new URLSearchParams({
+          page: currentPage + 1,
+          pageSize
+        });
+        if (currentSearch) params.append('search', currentSearch);
+        if (currentEmailFilter) params.append('email', currentEmailFilter);
+        const response = await fetch(`${apiEndpoint}?${params.toString()}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -162,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (currentPage < totalPages) {
           currentPage++;
-          await fetchAndPopulateContacts(currentPage);
+          await fetchAndPopulateContacts(currentPage, currentSearch, currentEmailFilter);
         }
       } catch (error) {
         console.error('Error fetching contacts:', error);
@@ -172,6 +183,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Initial fetch and populate
   fetchAndPopulateContacts(currentPage);
+
+  // Search and filter form logic
+  const searchFilterForm = document.getElementById('searchFilterForm');
+  const searchInput = document.getElementById('searchInput');
+  const emailFilterInput = document.getElementById('emailFilterInput');
+  const clearFiltersBtn = document.getElementById('clearFilters');
+
+  searchFilterForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    currentSearch = searchInput.value.trim();
+    currentEmailFilter = emailFilterInput.value.trim();
+    currentPage = 1;
+    fetchAndPopulateContacts(currentPage, currentSearch, currentEmailFilter);
+  });
+
+  clearFiltersBtn.addEventListener('click', function () {
+    searchInput.value = '';
+    emailFilterInput.value = '';
+    currentSearch = '';
+    currentEmailFilter = '';
+    currentPage = 1;
+    fetchAndPopulateContacts(currentPage);
+  });
 
   // Function to delete a contact
   async function deleteContact(contactId) {
@@ -200,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // You may want to handle the case where the deleted row is not found (for consistency)
 
         // Refresh the table after successful deletion
-        await fetchAndPopulateContacts(currentPage);
+        await fetchAndPopulateContacts(currentPage, currentSearch, currentEmailFilter);
       } else {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

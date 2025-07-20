@@ -2,57 +2,129 @@ header {
   text-align: center;
 }
 
-#errorMessage {
-  text-align: center;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
-}
-
-th,
-td {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-.centered-message {
-  text-align: center;
-}
-
+/* General button styles */
 .button {
   background-color: #008cba;
   color: white;
-  padding: 10px 20px; /* Adjusted padding for better aesthetics */
+  padding: 10px 20px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Added smooth transition */
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  font-size: 1em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .button:hover {
   background-color: #005177;
 }
 
-#paginationControls {
-  margin-top: 20px;
-  text-align: center;
+/* Screen reader only class for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Apply styles specifically for buttons within #paginationControls */
+/* Error message styling */
+#errorMessage {
+  text-align: center;
+  color: #dc3545;
+  display: none;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+/* Enhanced table styling */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+
+th,
+td {
+  border: none;
+  text-align: left;
+  padding: 12px 14px;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) td {
+  background-color: #f9fbfc;
+}
+
+tr:hover td {
+  background-color: #e6f3fa;
+  transition: background 0.2s;
+}
+
+/* Rounded corners for table */
+table thead tr:first-child th:first-child {
+  border-top-left-radius: 12px;
+}
+table thead tr:first-child th:last-child {
+  border-top-right-radius: 12px;
+}
+table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* Pagination controls styling */
+#paginationControls {
+  margin-top: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
 #paginationControls .button {
-  margin: 0 5px; /* Add margin between buttons */
+  margin: 0 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #f2f2f2;
+  color: #008cba;
+  border: 1px solid #cce7f3;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+#paginationControls .button:hover {
+  background: #008cba;
+  color: #fff;
+  border: 1px solid #008cba;
 }
 
 #currentPage {
   margin: 0 10px;
-  font-weight: bold; /* Made the current page bold for better visibility */
+  font-weight: bold;
+  color: #008cba;
+  font-size: 1.1em;
 }
 
 #contactInfo {
@@ -69,4 +141,129 @@ th {
 
 #pageCount {
   color: #000000;
+}
+
+/* Improved styling for search/filter controls */
+#searchFilterControls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+}
+
+#searchFilterForm {
+  background: #f8fafc;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#searchFilterForm input[type="text"],
+#searchFilterForm input[type="email"] {
+  padding: 10px 14px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 1em;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 220px;
+  background: #fff;
+}
+
+#searchFilterForm input[type="text"]:focus,
+#searchFilterForm input[type="email"]:focus {
+  border-color: #008cba;
+  box-shadow: 0 0 0 2px #cce7f3;
+}
+
+#searchFilterForm .button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 1em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+#searchFilterForm .button#clearFilters {
+  background: #e0e0e0;
+  color: #333;
+  border: 1px solid #cccccc;
+}
+
+#searchFilterForm .button#clearFilters:hover {
+  background: #cccccc;
+  color: #000;
+}
+
+/* Improved Action (Delete) button styling in table */
+#contactsTableBody td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+  min-height: 56px;
+}
+
+#contactsTableBody .button {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(220,53,69,0.08);
+  margin: 0 auto;
+  display: block;
+  width: 80%;
+  max-width: 160px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#contactsTableBody .button:hover {
+  background-color: #c82333;
+  box-shadow: 0 4px 12px rgba(220,53,69,0.18);
+}
+
+#contactsTableBody .button:active {
+  background-color: #bd2130;
+}
+
+@media (max-width: 600px) {
+  #searchFilterForm {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7em;
+    padding: 12px 8px;
+  }
+  #searchFilterForm input[type="text"],
+  #searchFilterForm input[type="email"] {
+    min-width: 0;
+    width: 100%;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+  }
+  table {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  th, td {
+    padding: 10px 8px;
+  }
+  #paginationControls {
+    flex-direction: column;
+    gap: 0.5em;
+  }
 }

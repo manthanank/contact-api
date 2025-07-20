@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="conatact" />
+    <meta name="keywords" content="contact" />
     <meta
       name="description"
       content="This is my personal contacts page created using static HTML, CSS, Javascript. Used vercel to host this website."
@@ -40,29 +40,55 @@
     <header>
       <h1>Contacts</h1>
     </header>
-    <div id="errorMessage" style="color: red; display: none"></div>
-    <table>
+    <div id="errorMessage" role="alert" aria-live="polite"></div>
+    <div id="searchFilterControls">
+      <form id="searchFilterForm">
+        <label for="searchInput" class="sr-only">Search contacts</label>
+        <input 
+          type="text" 
+          id="searchInput" 
+          name="search"
+          placeholder="Search (name, email, message)" 
+          aria-label="Search contacts by name, email, or message"
+        />
+        <label for="emailFilterInput" class="sr-only">Filter by email</label>
+        <input 
+          type="email" 
+          id="emailFilterInput" 
+          name="email"
+          placeholder="Filter by email" 
+          aria-label="Filter contacts by email address"
+        />
+        <button type="submit" class="button" aria-label="Search contacts">
+          <i class="fas fa-search" aria-hidden="true"></i> Search
+        </button>
+        <button type="button" id="clearFilters" class="button" aria-label="Clear all filters">
+          Clear
+        </button>
+      </form>
+    </div>
+    <table role="table" aria-label="Contacts list">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Message</th>
-          <th>Action</th>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Message</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody id="contactsTableBody"></tbody>
     </table>
-    <div id="paginationControls">
-      <button class="button" id="prevPage">
-        <i class="fas fa-chevron-left"></i>
+    <nav id="paginationControls" aria-label="Pagination">
+      <button class="button" id="prevPage" aria-label="Previous page">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
       </button>
-      <span id="currentPage">Page 1</span>
-      <button class="button" id="nextPage">
-        <i class="fas fa-chevron-right"></i>
+      <span id="currentPage" aria-current="page">Page 1</span>
+      <button class="button" id="nextPage" aria-label="Next page">
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
       </button>
-    </div>
-    <div id="contactInfo">
+    </nav>
+    <div id="contactInfo" role="status" aria-live="polite">
       <span id="totalContacts"></span>
       <span id="pageCount"></span>
     </div>
