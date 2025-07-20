@@ -1,0 +1,42 @@
+{
+  "name": "contact",
+  "version": "1.0.0",
+  "description": "A backend API for a contact form web application, built with Node.js, Express, and MongoDB. Features include a RESTful API for managing contacts, input validation, rate limiting, logging with Winston, and interactive API documentation using Swagger. The project serves a static frontend (HTML, CSS, JS) from the public directory. See the frontend demo at https://manthanank.github.io/contact/.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manthanank/contact.git"
+  },
+  "keywords": [
+    "contact",
+    "form",
+    "api",
+    "mongodb",
+    "express",
+    "nodejs",
+    "swagger"
+  ],
+  "author": "Manthan Ankolekar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manthanank/contact/issues"
+  },
+  "homepage": "https://github.com/manthanank/contact#readme",
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "mongoose": "^8.16.1",
+    "nodemailer": "^7.0.4",
+    "nodemon": "^3.1.10",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^7.0.0"
+  }
+}
